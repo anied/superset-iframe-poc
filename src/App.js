@@ -1,23 +1,12 @@
-import logo from './logo.svg';
+import SupersetDashboard from './components/SupersetDashboard/SupersetDashboard';
+
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app d-flex flex-column vh-100">
+      <h1>Superset Bidirectional Communication POC</h1>
+      <SupersetDashboard />
     </div>
   );
 }
