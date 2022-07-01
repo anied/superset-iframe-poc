@@ -1,4 +1,7 @@
 .superset-dashboard {
     background-color: aquamarine;
-    border: 1px solid black;
+}
+
+.superset-dashboard iframe {
+    flex-grow: 1;
 }
