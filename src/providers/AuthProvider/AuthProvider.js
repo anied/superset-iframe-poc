@@ -42,9 +42,9 @@ const AuthProvider = ({ children }) => {
         } else if (accessToken && !guestToken && !guestTokenRequestInFlight) {
             const payload = {
                 user: {
-                    username: 'guest',
-                    first_name: 'Gary',
-                    last_name: 'Guest',
+                    username: 'admin',
+                    first_name: 'admin',
+                    last_name: 'user',
                 },
                 rls: [],
                 resources: [

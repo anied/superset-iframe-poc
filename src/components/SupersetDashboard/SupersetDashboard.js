@@ -7,16 +7,13 @@ import './SupersetDashboard.css';
 const SupersetDashboard = () => {
     const { guestToken } = useAuth();
     const {
-        supersetFrontEndProtocol,
-        supersetFrontEndDomain,
-        supersetFrontEndPort,
+        supersetResolvedDomain: supersetDomain,
         dashboardId,
     } = useConfig();
 
 
     useEffect(() => {
         console.log('embedding dashboard');
-        const supersetDomain = `${supersetFrontEndProtocol}://${supersetFrontEndDomain}:${supersetFrontEndPort}`;
         embedDashboard({
             id: dashboardId, // given by the Superset embedding UI
             supersetDomain,

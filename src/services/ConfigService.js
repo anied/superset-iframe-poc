@@ -25,6 +25,7 @@ const envVars = {
 const appConfig = {
     ...envVars,
     // api: `${supersetProtocol}://${supersetDomain}:${supersetPort}/${supersetApiPath}`, // NON DEV?
+    supersetResolvedDomain: `${supersetFrontEndProtocol}://${supersetFrontEndDomain}:${supersetFrontEndPort}`,
     api: `/${supersetApiPath}`,
 };
 

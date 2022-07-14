@@ -1,7 +1,3 @@
-.superset-dashboard {
-    background-color: aquamarine;
-}
-
 .superset-dashboard iframe {
     flex-grow: 1;
 }
