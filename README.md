@@ -1,70 +1,76 @@
-# Getting Started with Create React App
+# <abbr title="Proof of concept">POC</abbr> for bidirectional communication between an embedded Superset dashboard and its parent/hosting application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+(This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).)
 
-## Available Scripts
+## Overview
 
-In the project directory, you can run:
+This project exists by client request to explore the limits of bidirectional communication between an `<iframe/>`-embedded Superset dashboard and the hosting application in which it is embedded.  Per the client's wishes, this is stored in this public repo on my personal Github.  It is intended to be used in conjunction with [its sister application: a forked Superset repo modified to interact with this repo](https://github.com/anied/superset-iframe-poc-embedded-app/tree/iframe-poc-changes).
 
-### `npm start`
+Please note:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- This <abbr title="Proof of concept">POC</abbr> has been verified to work on MacOS and Ubuntu; Windows is thus far **_untested_**
+- This <abbr title="Proof of concept">POC</abbr> has been verified to work with a Superset installation directly to the filesystem; doing a docker-based install is **_untested_**
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Getting started
 
-### `npm test`
+### Setup
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### **Setup the sister application**
 
-### `npm run build`
+This repo is intended to be used in conjunction with a modified Superset fork.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Clone [the modified Superset fork](https://github.com/anied/superset-iframe-poc-embedded-app/tree/iframe-poc-changes) locally:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    `git clone https://github.com/anied/superset-iframe-poc-embedded-app.git`
+1. Checkout the modified branch ([`iframe-poc-changes`](https://github.com/anied/superset-iframe-poc-embedded-app/tree/iframe-poc-changes)):
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    `git checkout iframe-poc-changes`
 
-### `npm run eject`
+1. Install Superset (back end and front end) on your machine
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+    **NOTE:** This <abbr title="Proof of concept">POC</abbr> has been verified to work with a direct installation to the filesystem; doing a docker-based install is **_untested_**
+1. Run the backend and front end and log into Superset.
+1. Create your own test dashboard for usage in this exercise
+1. In the upper-right corner of the dashboard, click the "three-dot" menu and select "Embed Dashboard"
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+    ![Screenshot of the dashboard menu expanded/open, the "Embed Dashboard" menu option is highlighted](/readme_assets/EmbedDashboardControl.png)
+1. Follow the instructions shown in the subsequent modal dialog. Copy the dashboard ID as it will be needed in setting up the parent app.  In the "Allowed Domains" text box, enter the domain on which you intend to run the parent app (`localhost:3000` by default).  Save changes.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+    ![Screenshot of the "embed dashboard" modal dialog open, with `localhost:3000` in the "Allowed Domains" field](/readme_assets/EmbedDashboardModal.png)
+#### **Setup this application**
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1. Run `npm install` to install dependencies
+1. Open `.env`, it will look roughly like this:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+    ```
+    REACT_APP_SUPERSET_PORT=8088
+    REACT_APP_SUPERSET_PROTOCOL=http
+    REACT_APP_SUPERSET_DOMAIN=localhost
+    REACT_APP_SUPERSET_FRONT_END_PORT=9000
+    REACT_APP_SUPERSET_FRONT_END_PROTOCOL=http
+    REACT_APP_SUPERSET_FRONT_END_DOMAIN=localhost
+    REACT_APP_SUPERSET_USER=admin
+    REACT_APP_SUPERSET_PW=<<<---YOUR_SUPERSET_PASSWORD--->>>
+    REACT_APP_SUPERSET_API_PATH=api/v1
+    REACT_APP_DASHBOARD_ID=<<<---YOUR_DASHBOARD_ID--->>>
+    ```
 
-### Code Splitting
+    These are environment variables that will be accessible inside the running application.  You must replace `REACT_APP_SUPERSET_PW` with your Superset password and `REACT_APP_DASHBOARD_ID` with the ID of your embeddable dashboard.  Make any other salient adjustments you may need to make in this file
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Run the app(s) and verify the result
 
-### Analyzing the Bundle Size
+1. If you are not already running the Superset back end and front end, do so now; login to Superset in the browser
+1. Run `npm start` to start the host app
+1. Open the browser to `localhost:3000` (or whatever you set in `.env`).  You should see the host application and your dashboard nested below it
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+    ![Host app with embedded dashboard-- text is "Superset Bidirectional Communication POC"](/readme_assets/HostAppWithEmbeddedDashboard.png)
+1. Click the "Send message to dashboard" button; the console should reflect that the dashboard received the message
+1. Click the "Send message to parent" button; the console should reflect that the host frame received the message
 
-### Making a Progressive Web App
+## A few words on best practices
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+While some attempt was made to leverage best practices inside the React host app, the ultimate goal was to prove the concepts as requested by the client.  Additionally, very little effort was made to keep the code in the modified Superset fork clean.
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Critically, the login/auth flow being used here is inherently insecure and almost certainly not as intended; it was, for the most part, wired up in this way to ease development and avoid needing to go and continuously retrieve a guest token.  **This auth flow should _not_ be recreated verbatim in any deployed environments, _especially_ not in Production and/or customer-facing environments.**
