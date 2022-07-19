@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 
 import IframeMessageService from './services/IframeMessageService';
+import RequestChartUrlControl from './components/RequestChartUrlControl/RequestChartUrlControl';
 import SendMessageToDashboardButton from './components/SendMessageToDashboardButton/SendMessageToDashboardButton';
 import SupersetDashboard from './components/SupersetDashboard/SupersetDashboard';
 
@@ -17,6 +18,7 @@ function App() {
   return (
     <div className="app d-flex flex-column vh-100">
       <h1>Superset Bidirectional Communication POC</h1>
+      <RequestChartUrlControl />
       <SendMessageToDashboardButton />
       <SupersetDashboard />
     </div>
