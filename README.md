@@ -4,7 +4,7 @@
 
 ## Overview
 
-This project exists by client request to ~~explore the limits of bidirectional communication between an `<iframe/>`-embedded Superset dashboard and the hosting application in which it is embedded.~~ (**UPDATE: As the <abbr title="Proof of concept">POC</abbr> developed, a new goal was identified-- creating a POC of allowing request of a chart permalink from the host application to the embedded `<iframe>` using the Superset-idiomatic approach of leveraging the [Superset `Switchboard`](https://github.com/apache/superset/blob/cb2ffa530f79033716fd719f6798eec049a4dd57/superset-frontend/packages/superset-ui-switchboard/src/switchboard.ts)**).  Per the client's wishes, this is stored in this public repo on my personal Github.  It is intended to be used in conjunction with [its sister application: a forked Superset repo modified to interact with this repo](https://github.com/anied/superset-iframe-poc-embedded-app/tree/iframe-poc-changes).
+This project exists by client request to ~~explore the limits of bidirectional communication between an `<iframe/>`-embedded Superset dashboard and the hosting application in which it is embedded.~~ (**UPDATE: As the <abbr title="Proof of concept">POC</abbr> developed, a new goal was identified-- creating a POC of allowing request of a chart permalink from the host application to the embedded `<iframe>` using the Superset-idiomatic approach of leveraging the [Superset `Switchboard`](https://github.com/apache/superset/blob/cb2ffa530f79033716fd719f6798eec049a4dd57/superset-frontend/packages/superset-ui-switchboard/src/switchboard.ts)**).  Per the client's wishes, this is stored in this public repo on my personal Github.  It is intended to be used in conjunction with [its sister application: a forked Superset repo modified to interact with this repo](https://github.com/anied/superset-iframe-poc-embedded-app/tree/iframe-poc-changes-switchboard-test).
 
 Please note:
 
@@ -19,10 +19,10 @@ Please note:
 
 This repo is intended to be used in conjunction with a modified Superset fork.
 
-1. Clone [the modified Superset fork](https://github.com/anied/superset-iframe-poc-embedded-app/tree/iframe-poc-changes) locally:
+1. Clone [the modified Superset fork](https://github.com/anied/superset-iframe-poc-embedded-app/tree/iframe-poc-changes-switchboard-test) locally:
 
     `git clone https://github.com/anied/superset-iframe-poc-embedded-app.git`
-1. Checkout the modified branch ([`iframe-poc-changes-switchboard-test`](https://github.com/anied/superset-iframe-poc-embedded-app/tree/iframe-poc-changes-switchboard-test):
+1. Checkout the modified branch ([`iframe-poc-changes-switchboard-test`](https://github.com/anied/superset-iframe-poc-embedded-app/tree/iframe-poc-changes-switchboard-test)):
 
     `git checkout iframe-poc-changes-switchboard-test`
 
@@ -51,7 +51,7 @@ For this <abbr title="Proof of concept">POC</abbr> it will be necessary to lever
 These are instructions for setting up this, the host application.  Assume all terminal commands occur at the top level of this repo directory unless otherwise noted or directed.
 
 1. Run `npm install` to install dependencies
-1. Run `npm link <YOUR_/_PATH_/_TO_/_YOUR_/_LOCAL>/superset-embedded-sdk` to install this dependency from your local (rather than from NPM)
+1. Run `npm link <YOUR_PATH_TO_YOUR_LOCAL>/superset-embedded-sdk` to install this dependency from your local (rather than from NPM)
 
     _(**NOTE:** for reasons not entirely apparent, when `npm link`ing to the local embedded SDK `@superset-ui/switchboard` must be installed as a peer dependency; this is already handled for you in `package.json`.  However, for Production implementations of these concepts, this may not be necessary.)_
 1. Open `.env`, it will look roughly like this:
